@@ -1,6 +1,8 @@
-# Airbnb JavaScript Style Guide() {
-
+# JavaScript Style Guide() {
 *A mostly reasonable approach to JavaScript*
+
+(derived from AirBnB's JavaScript style guide: [https://github.com/airbnb/javascript](https://github.com/airbnb/javascript))
+
 
 
 ## <a name='TOC'>Table of Contents</a>
@@ -121,7 +123,7 @@
 
 ## <a name='arrays'>Arrays</a>
 
-  - Use the literal syntax for array creation
+  - Use the literal syntax for array creation. This avoids unnecessary scope resolution to the global "Array" name and is more consise.
 
     ```javascript
     // bad
@@ -166,6 +168,15 @@
     function trigger() {
       var args = Array.prototype.slice.call(arguments);
       ...
+    }
+    ```
+    
+    OR 
+    
+    ```javascript
+    function trigger() {
+        var args = [].prototype.slice.call(arguments);
+        …
     }
     ```
 
@@ -321,7 +332,7 @@
 
 ## <a name='properties'>Properties</a>
 
-  - Use dot notation when accessing properties.
+  - Use dot notation when accessing properties when possible.
 
     ```javascript
     var luke = {
@@ -611,10 +622,10 @@
     if (test)
       return false;
 
-    // good
+    // sometimes ok
     if (test) return false;
 
-    // good
+    // usually better
     if (test) {
       return false;
     }
@@ -665,13 +676,13 @@
     }
     ```
 
-  - Use `//` for single line comments. Place single line comments on a newline above the subject of the comment. Put an emptyline before the comment.
+  - Use `//` for single line comments. Place single line comments on a newline above the subject of the comment. Put an emptyline before the comment, as this greatly improves readability.
 
     ```javascript
-    // bad
+    // sometimes ok
     var active = true;  // is current tab
 
-    // good
+    // usually better
     // is current tab
     var active = true;
 
@@ -726,22 +737,17 @@
 
 ## <a name='whitespace'>Whitespace</a>
 
-  - Use soft tabs set to 2 spaces
+  - Use soft tabs set to 4 spaces
 
     ```javascript
     // bad
     function() {
-    ∙∙∙∙var name;
-    }
-
-    // bad
-    function() {
-    ∙var name;
+    ∙∙var name;
     }
 
     // good
     function() {
-    ∙∙var name;
+    ∙∙∙∙var name;
     }
     ```
   - Place 1 space before the leading brace.
@@ -1053,10 +1059,9 @@
     this._firstName = 'Panda';
     ```
 
-  - When saving a reference to `this` use `_this`.
+  - When saving a reference to `this` use `self`.
 
     ```javascript
-    // bad
     function() {
       var self = this;
       return function() {
@@ -1064,32 +1069,15 @@
       };
     }
 
-    // bad
-    function() {
-      var that = this;
-      return function() {
-        console.log(that);
-      };
-    }
-
-    // good
-    function() {
-      var _this = this;
-      return function() {
-        console.log(_this);
-      };
-    }
-    ```
-
-  - Name your functions. This is helpful for stack traces.
+  - Naming your function expressions can be helpful for stack traces.
 
     ```javascript
-    // bad
+    // not *necessarily* bad
     var log = function(msg) {
       console.log(msg);
     };
 
-    // good
+    // function name will show up in stack trace
     var log = function log(msg) {
       console.log(msg);
     };
@@ -1270,7 +1258,6 @@
 
 ## <a name='modules'>Modules</a>
 
-  - The module should start with a `!`. This ensures that if a malformed module forgets to include a final semicolon there aren't errors in production when the scripts get concatenated.
   - The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
   - Add a method called noConflict() that sets the exported module to the previous version and returns this one.
   - Always declare `'use strict';` at the top of the module.
@@ -1449,7 +1436,7 @@
 
 ## <a name='in-the-wild'>In the Wild</a>
 
-  This is a list of organizations that are using this style guide. Send us a pull request or open an issue and we'll add you to the list.
+  This is a list of organizations that are using the AirBnB style guide. Send us a pull request or open an issue and we'll add you to the list.
 
   - **Airbnb**: [airbnb/javascript](https://github.com/airbnb/javascript)
   - **American Insitutes for Research**: [AIRAST/javascript](https://github.com/AIRAST/javascript)
@@ -1471,7 +1458,7 @@
 
 ## <a name='translation'>Translation</a>
 
-  This style guide is also available in other languages:
+  The AirBnB style guide is also available in other languages:
 
   - :de: **German**: [timofurrer/javascript-style-guide](https://github.com/timofurrer/javascript-style-guide)
   - :jp: **Japanese**: [mitsuruog/javacript-style-guide](https://github.com/mitsuruog/javacript-style-guide)
@@ -1487,7 +1474,7 @@
   - [View Contributors](https://github.com/airbnb/javascript/graphs/contributors)
 
 
-## <a name='license'>License</a>
+## <a name='license'>Original License</a>
 
 (The MIT License)
 
