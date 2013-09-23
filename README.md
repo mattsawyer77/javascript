@@ -300,7 +300,7 @@
     // bad
     if (currentUser) {
         function test() {
-            console.log('Nope.');
+          console.log('Nope.');
         }
     }
 
