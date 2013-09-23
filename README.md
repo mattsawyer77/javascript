@@ -26,7 +26,8 @@
   1. [Accessors](#accessors)
   1. [Constructors](#constructors)
   1. [Events](#events)
-  1. [Modules](#modules)
+  1. [RequireJS Modules](#requirejs)
+  1. [Node.js Modules](#nodejs)
   1. [jQuery](#jquery)
   1. [ES5 Compatibility](#es5)
   1. [Testing](#testing)
@@ -737,7 +738,7 @@
 
 ## <a name='whitespace'>Whitespace</a>
 
-  - Use soft tabs set to 4 spaces
+  - Indent with 4 spaces
 
     ```javascript
     // bad
@@ -750,11 +751,31 @@
     ∙∙∙∙var name;
     }
     ```
-  - Place 1 space before the leading brace.
+  - Don't wrap opening braces
+    ```javascript
+    // bad
+    function test()
+    {
+        if(condition)
+        {
+            ...
+        }
+    }
+
+    // good
+    function test() {
+        if(condition) {
+            ...
+        }
+    }
+
+    ```
+
+  - Place 1 space before leading braces/brackets and no spaces before function signature parentheses.
 
     ```javascript
     // bad
-    function test(){
+    function test (){
     ∙∙∙∙console.log('test');
     }
 
@@ -1255,35 +1276,87 @@
   **[[⬆]](#TOC)**
 
 
-## <a name='modules'>Modules</a>
+## <a name='requirejs'>RequireJS Modules (client-side)</a>
 
-  - The file should be named with camelCase, live in a folder with the same name, and match the name of the single export.
-  - Add a method called noConflict() that sets the exported module to the previous version and returns this one.
+  - If the exported module is a constructor, the file should be named with PascalCase and match the name of the single export.
+  - If the exported module is an object or non-constructor function, the file should be named with camelCase.
   - Always declare `'use strict';` at the top of the module.
 
     ```javascript
-    // fancyInput/fancyInput.js
+    // ModuleName/ModuleName.js
 
-    !function(global) {
+    !function() {
         'use strict';
 
-        var previousFancyInput = global.FancyInput;
-
-        function FancyInput(options) {
-            this.options = options || {};
+        function privateStaticFunction() {
+            ...
         }
 
-        FancyInput.noConflict = function noConflict() {
-            global.FancyInput = previousFancyInput;
-            return FancyInput;
-        };
+        var ModuleName = function() {
+            var self = this,
+                privateVar;
 
-        global.FancyInput = FancyInput;
-    }(this);
+            function privateFunction() {
+                ...
+            }
+
+            this.publicMethod = function() {
+                ...
+            }
+
+            this.publicProperty = ...;
+
+            return self;
+        }
+
+        return ModuleName;
+    }();
     ```
 
     **[[⬆]](#TOC)**
 
+## <a name='nodejs'>Node.js Modules (server-side)</a>
+
+  - The main file (defined in package.json) should be named with camelCase and should live in a folder with the same name.
+  - Always declare `'use strict';` at the top of the module.
+
+    ```javascript
+    // moduleName/moduleName.js
+
+    'use strict';
+
+    function privateStaticFunction() {
+        ...
+    }
+
+    function publicStaticFunction() {
+        ...
+    }
+
+    var ModuleName = function() {
+        var self = this,
+            privateVar;
+
+        function privateFunction() {
+            ...
+        }
+
+        this.publicMethod = function() {
+            ...
+        }
+
+        this.publicProperty = ...;
+
+        return self;
+    }
+
+    // expose public functionality
+    exports.ModuleName = ModuleName;
+    exports.publicStaticFunction = publicStaticFunction;
+
+    ```
+
+    **[[⬆]](#TOC)**
 
 ## <a name='jquery'>jQuery</a>
 
